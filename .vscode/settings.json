@@ -1,0 +1,4 @@
+{
+  "cSpell.words": ["firestore", "Recaptcha", "solidjs"],
+  "tailwindCSS.experimental.classRegex": ["tw`([^`]*)`"]
+}

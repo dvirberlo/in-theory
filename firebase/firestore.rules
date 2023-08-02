@@ -1,0 +1,162 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /questions/{question} {
+      allow read: if true;
+
+      allow update: if isSignedIn(request) && updatedOnly(['explanations'])
+        && (
+      isValidNewExplanation(request, resource)
+        || isValidOldExplanationDelete(request, resource)
+        || isValidLastSelfExplanationDelete(request, resource)
+        || isValidVote(request, resource)
+      // || isValidLastExplanationUpdate(request, resource)
+      );
+    }
+
+    match /info/0 {
+      allow get: if true;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn(request) {
+      return request.auth.uid != null;
+    }
+    function isAuthor(request, author) {
+      return request.auth.uid == author;
+    }
+
+    function updatedOnly(fields) {
+      let oldData = resource.data;
+      let newData = request.resource.data;
+
+      return newData.diff(oldData).affectedKeys().hasOnly(fields);
+    }
+
+    function constraints(value, min, max) {
+      return value.size() >= min && value.size() <= max;
+    }
+
+    function strConstraints(value, min, max) {
+      return value is string && constraints(value, min, max);
+    }
+
+    function isNow(request, value) {
+      return math.abs(value - request.time.toMillis()) < 1000 * 30;
+    }
+
+    function isList(value) {
+      return value is list;
+    }
+    function isEmptyList(value) {
+      return value == [];
+    }
+    function listConstraints(value, min, max) {
+      return isList(value) && constraints(value, min, max);
+    }
+    function isUniqueList(value) {
+      return isList(value) && value.toSet().size() == value.size();
+    }
+
+
+    function isValidNewExplanation(request, resource) {
+      let maxExplanations = 5;
+      let maxExplanationLength = 200;
+
+      let oldExplanationsSize = resource.data.explanations.size();
+      let newExplanationsSize = request.resource.data.explanations.size();
+      let newExplanation = request.resource.data.explanations[oldExplanationsSize];
+      return
+      newExplanationsSize == oldExplanationsSize + 1 // added, and added one
+        && isNow(request, newExplanation.date)
+        && isAuthor(request, newExplanation.author)
+        && strConstraints(newExplanation.text, 3, maxExplanationLength)
+      // no votes yet:
+        && isEmptyList(newExplanation.upVotes)
+        && isEmptyList(newExplanation.downVotes)
+        && newExplanation.votes == 0
+        && listConstraints(request.resource.data.explanations, 0, maxExplanations);
+    }
+
+    function isValidOldExplanationDelete(request, resource) {
+      // since we limit the number of explanations, we want to provide simple way to delete them
+      // so, we found that the easiest way to implement this is to allow to delete the oldest explanation
+      // and, only if the list is full.
+      // we assume that the oldest explanation is the [0] element in the list (currently, it holds true)
+      let maxExplanations = 5;
+      let oldExplanations = resource.data.explanations;
+      let newExplanations = request.resource.data.explanations;
+
+      return oldExplanations.size() == maxExplanations
+        && newExplanations.size() == maxExplanations - 1
+        && oldExplanations[1:] == newExplanations;
+
+    }
+
+    function isValidLastSelfExplanationDelete(request, resource) {
+      let oldExplanations = resource.data.explanations;
+      let newExplanations = request.resource.data.explanations;
+
+      return newExplanations.size() == oldExplanations.size() - 1
+        && oldExplanations[0:oldExplanations.size() - 1] == newExplanations
+        && isAuthor(request, oldExplanations[oldExplanations.size() - 1].author);
+
+    }
+
+    function isValidVote(request, resource) {
+      // makes sure:
+      // 1. the votes arrays were updated only with the uid, and it appears only once
+      // 2. the votes property equals to upVotes.size() - downVotes.size()
+
+      let oldExplanations = resource.data.explanations;
+      let newExplanations = request.resource.data.explanations;
+
+      return oldExplanations.size() == newExplanations.size()
+        && votesValid(newExplanations, oldExplanations, 0)
+        && votesValid(newExplanations, oldExplanations, 1)
+        && votesValid(newExplanations, oldExplanations, 2)
+        && votesValid(newExplanations, oldExplanations, 3)
+        && votesValid(newExplanations, oldExplanations, 4);
+    }
+    function votesValid(newExplanations, oldExplanations, index) {
+      return newExplanations.size() < index + 1
+        || (
+      true
+        && isUniqueList(newExplanations[index].upVotes)
+        && (
+      newExplanations[index].upVotes.toSet().difference(oldExplanations[index].upVotes.toSet()).size() == 0
+        || newExplanations[index].upVotes.toSet().difference(oldExplanations[index].upVotes.toSet()) == [request.auth.uid].toSet()
+      )
+        && isUniqueList(newExplanations[index].downVotes)
+        && (
+      newExplanations[index].downVotes.toSet().difference(oldExplanations[index].downVotes.toSet()).size() == 0
+        || newExplanations[index].downVotes.toSet().difference(oldExplanations[index].downVotes.toSet()) == [request.auth.uid].toSet()
+      )
+        && newExplanations[index].votes == newExplanations[index].upVotes.size() - newExplanations[index].downVotes.size()
+        && newExplanations[index].diff(oldExplanations[index]).affectedKeys().hasOnly(['upVotes', 'downVotes', 'votes'])
+      );
+    }
+
+  // function isValidLastExplanationUpdate(request, resource) {
+    //   let oldExplanations = resource.data.explanations;
+    //   let newExplanations = request.resource.data.explanations;
+
+    //   let oldUpdated = oldExplanations[oldExplanations.size() - 1];
+    //   let newUpdated = newExplanations[newExplanations.size() - 1];
+
+    //   return newExplanations.size() == oldExplanations.size()
+    //     && oldExplanations[0:oldExplanations.size() - 1] == newExplanations
+    //     && isAuthor(request, oldUpdated.author)
+    //     && isNow(request, newUpdated.date)
+    //     && strConstraints(newUpdated.text, 3, 200)
+    //     && newUpdated.upVotes == oldUpdated.upVotes
+    //     && newUpdated.downVotes == oldUpdated.downVotes
+    //     && newUpdated.votes == oldUpdated.votes;
+    // }
+  }
+}

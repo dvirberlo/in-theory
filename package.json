@@ -1,0 +1,42 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "scripts:generateQuestions": "npx ts-node -T scripts/generateQuestions.ts",
+    "scripts:generateLogo": "node scripts/generateLogo.js",
+    "firebase:test-rules": "npx ts-node -T firebase/test/rules.ts",
+    "firebase:deploy": "npx firebase deploy --only hosting"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^3.0.0",
+    "@total-typescript/ts-reset": "^0.4.2",
+    "@types/jsdom": "^21.1.1",
+    "autoprefixer": "^10.4.14",
+    "firebase-admin": "^11.10.1",
+    "jsdom": "^22.1.0",
+    "localtunnel": "^2.0.2",
+    "postcss": "^8.4.27",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.4.1",
+    "solid-devtools": "^0.27.4",
+    "svg2png": "^4.1.1",
+    "tailwindcss": "^3.3.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.6",
+    "vite-plugin-pwa": "^0.16.4",
+    "vite-plugin-solid": "^2.7.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "@solidjs/router": "^0.8.2",
+    "firebase": "^10.1.0",
+    "solid-js": "^1.7.8"
+  }
+}

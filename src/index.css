@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark light;
+    overflow: hidden;
+  }
+}
+
+/* :root {
+  --baseLight: hsl(0, 0%, 100%);
+  --baseDark: hsl(0, 0%, 0%);
+  --primaryBase: hsl(230 50% 50%);
+  --secondaryBase: hsl(100 50% 50%);
+
+
+  --content: var(--baseDark);
+  --level: var(--baseLight);
+
+  --primary: color-mix(in srgb, var(--primaryBase) 66%, var(--content));
+  --counterPrimary: var(--level);
+
+  --secondary: color-mix(in srgb, var(--secondaryBase) 66%, var(--level));
+  --counterSecondary: var(--content);
+
+  --level1: color-mix(in hsl, var(--level) 100%, var(--content));
+  --level2: color-mix(in hsl, var(--level) 90%, var(--content));
+  --level3: color-mix(in hsl, var(--level) 80%, var(--content));
+  --level4: color-mix(in hsl, var(--level) 70%, var(--content));
+  --level5: color-mix(in hsl, var(--level) 60%, var(--content));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --content: var(--baseLight);
+    --level: var(--baseDark);
+  }
+} */
+
+@keyframes slide-in-up {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes slide-in-down {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-out-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+@keyframes slide-out-down {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+@keyframes slide-out-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes slide-out-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* blur animations were removed because they are too heavy: */
+/*
+@keyframes blur-in {
+  0% {
+    filter: blur(10px);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+@keyframes blur-out {
+  0% {
+    filter: blur(0);
+    opacity: 1;
+  }
+  100% {
+    filter: blur(10px);
+    opacity: 0;
+  }
+}
+*/
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes scale-up {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes delayed-fade-in {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

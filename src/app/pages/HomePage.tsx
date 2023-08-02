@@ -1,0 +1,40 @@
+import { useNavigate } from '@solidjs/router';
+import { Component, Show } from 'solid-js';
+import { routesPath } from '../app.routes';
+import { UserProgress } from '../components/home/UserProgress';
+import { AwesomeIcon } from '../components/icons/AwesomeIcon';
+import { PrimaryButton, SecondaryButton } from '../components/lib/Button';
+import { userAccessor } from '../services/authService';
+
+const HomePage: Component = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div class="p-4 space-y-10">
+      <h1 class="text-6xl text-center font-thin">לימוד תיאוריה</h1>
+      <div>
+        <p class="text-2xl font-bold dark:text-sky-400 text-sky-600">
+          לימוד תיאוריה יעיל ונוח
+        </p>
+        <p class="text-xl font-medium dark:text-teal-400 text-teal-600 -mt-0">
+          באפליקציה נוחה וללא פרסומות
+        </p>
+      </div>
+      <div class="flex flex-row items-center gap-x-4">
+        <PrimaryButton onClick={() => navigate(routesPath.learn)}>
+          התחל ללמוד
+          <AwesomeIcon icon="fas fa-arrow-right" rtl />
+        </PrimaryButton>
+        <Show when={!userAccessor()}>
+          <SecondaryButton onClick={() => navigate(routesPath.login)}>
+            <AwesomeIcon icon="fas fa-sign-in-alt" rtl />
+            התחברות (אופציונלי)
+          </SecondaryButton>
+        </Show>
+      </div>
+      <UserProgress />
+    </div>
+  );
+};
+
+export default HomePage;
