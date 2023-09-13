@@ -16,12 +16,12 @@ export const QuestionImages: Component<{
 
 const QuestionImage: Component<{ image: Image }> = (props) => {
   return (
-    <div class="flex flex-col w-full max-h-[min(33dvh,100%)]">
+    <div class="flex max-h-[min(33dvh,100%)] w-full flex-col">
       <img
         src={`/images/questions/${props.image.id}`}
         alt={props.image.alt}
         title={props.image.alt}
-        class="h-auto w-auto object-contain rounded-md shadow-lg"
+        class="h-auto w-auto rounded-md object-contain shadow-lg"
         width="350px"
         height="230px"
       />

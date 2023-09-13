@@ -35,7 +35,7 @@ class ExplainsService {
       await updateDoc(
         qDoc,
         'explanations',
-        arrayRemove(question.explanations[0])
+        arrayRemove(question.explanations[0]),
       );
     }
     await updateDoc(qDoc, 'explanations', arrayUnion(newExplanation));
@@ -43,7 +43,7 @@ class ExplainsService {
 
   async voteExplanation(
     question: QuestionModel,
-    voteType: VoteType
+    voteType: VoteType,
   ): Promise<boolean> {
     console.log('voteExplanation', question, voteType);
     try {
@@ -79,13 +79,13 @@ class ExplainsService {
 
   protected async cancelVoteReq(
     question: QuestionModel,
-    qDoc: DocumentReference<DocumentData>
+    qDoc: DocumentReference<DocumentData>,
   ) {
     await updateDoc(qDoc, 'explanations', question.explanations);
   }
   protected async voteReq(
     question: QuestionModel,
-    qDoc: DocumentReference<DocumentData>
+    qDoc: DocumentReference<DocumentData>,
   ) {
     await updateDoc(qDoc, 'explanations', question.explanations);
   }

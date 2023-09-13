@@ -16,7 +16,7 @@ export const CenteredError: Component<{
   const navigate = useNavigate();
   const showDev = import.meta.env.DEV ? createSignal(true) : undefined;
   return (
-    <div class="flex flex-col items-center justify-center h-full gap-y-3">
+    <div class="flex h-full flex-col items-center justify-center gap-y-3">
       <span
         class="animate-bounce text-8xl text-red-500"
         role="img"
@@ -43,7 +43,7 @@ export const CenteredError: Component<{
         </Show>
       </div>
       <Show when={showDev?.[0]() === true && props.error !== undefined}>
-        <div dir="ltr" class="text-xl my-6">
+        <div dir="ltr" class="my-6 text-xl">
           <div>Debug info: (dev only)</div>
           <p>{props.error?.toString()}</p>
           <PrimaryButton onClick={() => showDev?.[1](false)} class="mx-auto">

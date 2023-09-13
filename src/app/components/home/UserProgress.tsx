@@ -6,7 +6,7 @@ export const UserProgress: Component = () => {
     async () =>
       await (
         await import('../../services/userService')
-      ).userService.getQuestionsProgress()
+      ).userService.getQuestionsProgress(),
   );
 
   return (
@@ -16,7 +16,7 @@ export const UserProgress: Component = () => {
       </Match>
       <Match when={progress()}>
         <div class="flex flex-col gap-2">
-          <p class="text-2xl font-semibold text-center">התקדמות</p>
+          <p class="text-center text-2xl font-semibold">התקדמות</p>
           <div class="flex flex-col gap-2">
             <div class="flex flex-row justify-between">
               <p>סה"כ שאלות</p>

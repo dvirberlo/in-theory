@@ -35,21 +35,21 @@ export const OverlaySideNav: Component<{
   return (
     <dialog
       class="
-        -z-50 open:z-50
-        open:fixed open:inset-0
-        my-2 ms-2
+        -z-50 my-2
+        ms-2 hidden
         h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)]
-        max-w-full
-        hidden
-        open:flex
-        flex-col
-
-        open:backdrop:backdrop-blur-xl
-        open:backdrop:animate-fade-in
-        backdrop:bg-transparent
-
-        p-0
+        max-w-full flex-col
         rounded-2xl
+        p-0
+        backdrop:bg-transparent
+        open:fixed
+
+        open:inset-0
+        open:z-50
+        open:flex
+
+        open:backdrop:animate-fade-in
+        open:backdrop:backdrop-blur-xl
 
         ltr:open:animate-slide-in-right rtl:open:animate-slide-in-left
         "
@@ -80,30 +80,30 @@ export const SideNav: Component<{
   return (
     <nav
       class={`
-        w-64 md:w-72
-        md:border-e-2 dark:border-gray-800 border-gray-300
-        rounded-e-2xl rounded-s-2xl md:rounded-s-none
-        dark:bg-gray-950 dark:text-gray-50
-        bg-gray-100 text-gray-950
-        p-4
-        relative
-        h-full
-        flex flex-col
+        relative flex
+        h-full w-64 flex-col
+        rounded-e-2xl rounded-s-2xl border-gray-300
+        bg-gray-100 p-4
+        text-gray-950 dark:border-gray-800
+        dark:bg-gray-950
+        dark:text-gray-50
+        md:w-72
+        md:rounded-s-none md:border-e-2
         ${props.class ?? ''}`}
     >
       <div
         class="
-      hidden md:flex
-      flex-row justify-between
       mb-8 mt-4
+      hidden flex-row
+      justify-between md:flex
        "
       >
         <h1 class="text-2xl font-bold">בתיאוריה</h1>
       </div>
       <div
         class="
-        md:hidden flex
-        flex-row justify-between
+        flex flex-row
+        justify-between md:hidden
          "
       >
         <h2 class="text-lg font-medium ">תפריט</h2>
@@ -117,7 +117,7 @@ export const SideNav: Component<{
           <AwesomeIcon icon="fas fa-times" />
         </IconSquare>
       </div>
-      <div class="flex flex-col flex-grow overflow-y-auto gap-y-2 ">
+      <div class="flex flex-grow flex-col gap-y-2 overflow-y-auto ">
         <MenuButton onClick={() => navigate(routesPath.home)}>
           <AwesomeIcon icon="fas fa-home" />
           <span>בית</span>

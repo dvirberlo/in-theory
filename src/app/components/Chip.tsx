@@ -9,10 +9,10 @@ export const Chip: Component<{
   return (
     <button
       class={`
-      dark:bg-gray-600 bg-gray-400
-        font-medium
-        rounded-full px-4 py-2 hover:opacity-90
-        transition-opacity duration-200
+      rounded-full bg-gray-400
+        px-4
+        py-2 font-medium transition-opacity duration-200
+        hover:opacity-90 dark:bg-gray-600
         ${
           (props.onClick !== undefined
             ? tw`cursor-pointer`

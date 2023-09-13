@@ -33,25 +33,25 @@ const AppShell: ParentComponent = (props) => {
       class="
       h-[100dvh] w-[100dvw]
       overflow-y-auto overflow-x-hidden
-      dark:bg-neutral-900 dark:text-white
       bg-neutral-100 text-black
+      dark:bg-neutral-900 dark:text-white
       "
     >
       <OverlaySideNav openSignal={openSignal} />
       <div
         class="
-          md:hidden sticky top-0
-          z-20
-          h-12 w-full flex flex-row items-center justify-center
-          dark:bg-gray-950 dark:text-neutral-100
-          bg-gray-50 text-neutral-900
-          shadow-lg dark:shadow-neutral-800 shadow-neutral-400
-          rounded-b-2xl md:rounded-none
-          px-2"
+          sticky top-0 z-20
+          flex
+          h-12 w-full flex-row items-center justify-center rounded-b-2xl
+          bg-gray-50 px-2
+          text-neutral-900 shadow-lg
+          shadow-neutral-400 dark:bg-gray-950 dark:text-neutral-100
+          dark:shadow-neutral-800 md:hidden
+          md:rounded-none"
       >
         <IconSquare
           class="
-          me-auto text-3xl absolute top-0 start-2 mt-1
+          absolute start-2 top-0 me-auto mt-1 text-3xl
           "
           onClick={() => setNavOpen((prev) => !prev)}
           area-label="menu"
@@ -63,16 +63,16 @@ const AppShell: ParentComponent = (props) => {
 
       <div
         class="
-      w-full h-full
-      flex flex-row justify-center
+      flex h-full
+      w-full flex-row justify-center
       "
       >
         <SideNav class="hidden md:flex " />
 
         <main
           class="
-        md:pt-2 pt-2
-        w-full
+        w-full pt-2
+        md:pt-2
         "
         >
           <ErrorBoundary

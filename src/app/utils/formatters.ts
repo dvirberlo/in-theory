@@ -22,7 +22,7 @@ export const relativeDateMs = (ms: number) => {
   }
   return _relativeDateFormatter.format(
     Math.round(diff / 1000 / 60 / 60 / 24),
-    'day'
+    'day',
   );
 };
 export const relativeDate = (date: Date) => relativeDateMs(date.getTime());

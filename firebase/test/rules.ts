@@ -83,7 +83,7 @@ const main = async () => {
         text: 'update: ' + new Date(),
         date: Date.now(),
       },
-    ]
+    ],
   );
   //   await addDoc(collection(user, "questions"), question);
 
@@ -143,7 +143,7 @@ const test = async () => {
   await updateDoc(
     qDoc,
     'explanations',
-    updatedExplanations
+    updatedExplanations,
     // {
     //   // ...question,
     //   explanations: updatedExplanations,

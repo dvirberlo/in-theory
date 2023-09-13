@@ -30,7 +30,7 @@ const main = async () => {
   try {
     while (totalResults === undefined || counter < totalResults) {
       const data = await QuestionFetcher.getData(
-        QuestionFetcher.reqInit(counter)
+        QuestionFetcher.reqInit(counter),
       );
       const questions = data?.Results;
       if (questions === undefined) throw new Error('could not get questions');
@@ -53,28 +53,28 @@ const main = async () => {
         questions.map(async (qRes) => {
           const question = await QuestionExtractor.extractQuestion(
             qRes,
-            counter
+            counter,
           );
           await qCollection.add(question);
           counter++;
           clearLineAndWrite(
             `generated and uploaded #${counter} of ${totalResults!} questions (~${Math.round(
-              (counter / totalResults!) * 100
-            )}%)`
+              (counter / totalResults!) * 100,
+            )}%)`,
           );
-        })
+        }),
       );
     }
     clearLineAndWrite(
       `generated and uploaded ${counter}/${totalResults} questions (${Math.round(
-        (counter / totalResults) * 100
-      )}%)\n`
+        (counter / totalResults) * 100,
+      )}%)\n`,
     );
     const endTime = Date.now();
     console.log(
       `finished generating questions in ${Math.round(
-        (endTime - startTime) / 1000
-      )} seconds`
+        (endTime - startTime) / 1000,
+      )} seconds`,
     );
   } catch (cause) {
     throw new Error(`could not get question ${counter}}`, { cause });
@@ -96,9 +96,7 @@ const mainVotes = async () => {
   const qCollection = db.collection(questionCollectionName);
 
   await Promise.all(
-    (
-      await qCollection.listDocuments()
-    ).map(async (doc) => {
+    (await qCollection.listDocuments()).map(async (doc) => {
       console.log('updating doc', doc.id);
       await doc.update({
         explanations: [],
@@ -107,7 +105,7 @@ const mainVotes = async () => {
         downVotes: [],
       });
       console.log('doc updated', doc.id);
-    })
+    }),
   );
 };
 
@@ -139,11 +137,11 @@ module QuestionFetcher {
   });
 
   export const getData = async (
-    init?: RequestInit | undefined
+    init?: RequestInit | undefined,
   ): Promise<ServerResponse> => {
     const res = await fetch(
       'https://www.gov.il/he/api/DataGovProxy/GetDGResults',
-      init
+      init,
     );
     const data = await res.json();
     return data as ServerResponse;
@@ -153,7 +151,7 @@ module QuestionFetcher {
 module QuestionExtractor {
   export async function extractQuestion(
     serverResult: QuestionFetcher.ServerResult,
-    id: number
+    id: number,
   ): Promise<Question> {
     const questionHtml = serverResult.Data.description4?.DescriptionHtmlString;
     if (questionHtml === undefined)
@@ -212,7 +210,7 @@ module QuestionExtractor {
     });
     return (
       await Promise.all(
-        images.map((image, index) => downloadImage(image, sources[index]))
+        images.map((image, index) => downloadImage(image, sources[index])),
       )
     ).filter((image) => image !== undefined) as Image[];
   }
@@ -220,7 +218,7 @@ module QuestionExtractor {
   const imagesDir = './public/images/questions';
   async function downloadImage(
     image: Image,
-    src: string
+    src: string,
   ): Promise<Image | undefined> {
     let res: Response | undefined;
     try {

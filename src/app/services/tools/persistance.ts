@@ -1,6 +1,6 @@
 export class Persistent<T> {
   protected fromStorage(str: string): T {
-    return JSON.parse(str);
+    return JSON.parse(str) as T;
   }
   protected toStorage(value: T): string {
     return JSON.stringify(value);
@@ -10,7 +10,7 @@ export class Persistent<T> {
   constructor(
     public key: string,
     defaultValue: T,
-    public storage: Storage = localStorage
+    public storage: Storage = localStorage,
   ) {
     const str = storage.getItem(key);
     if (!str) this.value = defaultValue;
@@ -28,7 +28,9 @@ export class Persistent<T> {
 
 export class PersistentSet<T> extends Persistent<Set<T>> {
   protected fromStorage(str: string): Set<T> {
-    return new Set(JSON.parse(str));
+    const arr = JSON.parse(str);
+    if (Array.isArray(arr)) return new Set(arr as T[]);
+    else return new Set();
   }
   protected toStorage(value: Set<T>): string {
     return JSON.stringify([...value]);

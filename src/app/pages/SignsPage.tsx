@@ -5,7 +5,7 @@ import { Component } from 'solid-js';
 const SignsPage: Component = () => {
   return (
     <div class="p-4">
-      <h1 class="text-6xl font-thin mb-4">לוח תמרורים</h1>
+      <h1 class="mb-4 text-6xl font-thin">לוח תמרורים</h1>
       <span class="text-md">
         לצערי לא מצאתי לוח תמרורים רשמי של משרד התחבורה שנגיש להשמה באתר.
         <br />

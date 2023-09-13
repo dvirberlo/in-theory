@@ -10,13 +10,13 @@ const HomePage: Component = () => {
   const navigate = useNavigate();
 
   return (
-    <div class="p-4 space-y-10">
-      <h1 class="text-6xl text-center font-thin">לימוד תיאוריה</h1>
+    <div class="space-y-10 p-4">
+      <h1 class="text-center text-6xl font-thin">לימוד תיאוריה</h1>
       <div>
-        <p class="text-2xl font-bold dark:text-sky-400 text-sky-600">
+        <p class="text-2xl font-bold text-sky-600 dark:text-sky-400">
           לימוד תיאוריה יעיל ונוח
         </p>
-        <p class="text-xl font-medium dark:text-teal-400 text-teal-600 -mt-0">
+        <p class="-mt-0 text-xl font-medium text-teal-600 dark:text-teal-400">
           באפליקציה נוחה וללא פרסומות
         </p>
       </div>

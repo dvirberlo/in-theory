@@ -55,7 +55,7 @@ const ExamInit: Component<{
   return (
     <article class="p-4">
       <h1 class="text-6xl font-thin ">מבחן</h1>
-      <div class="text-xl space-y-2 mt-2 mb-6">
+      <div class="mb-6 mt-2 space-y-2 text-xl">
         <p>
           <AwesomeIcon icon="fas fa-pen" class="me-2" />
           המבחן מורכב מ{EXAM_QUESTIONS} שאלות.
@@ -120,8 +120,8 @@ const ExamFill: Component<{
   return (
     <article class="p-4">
       <div class="flex flex-row justify-between">
-        <h1 class="text-6xl font-thin mb-4">מבחן</h1>
-        <ExamBanner class="dark:text-gray-900 text-white dark:bg-orange-300 bg-orange-600 text-2xl font-semibold font-mono">
+        <h1 class="mb-4 text-6xl font-thin">מבחן</h1>
+        <ExamBanner class="bg-orange-600 font-mono text-2xl font-semibold text-white dark:bg-orange-300 dark:text-gray-900">
           <AwesomeIcon icon="fas fa-hourglass-start" class="me-2" />
           <div dir="ltr">
             <span>
@@ -134,8 +134,8 @@ const ExamFill: Component<{
         </ExamBanner>
       </div>
       <div class="space-y-4">
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center">
-          <h2 class="text-3xl font-thin mb-4">שאלה מספר {QIdx() + 1}</h2>
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+          <h2 class="mb-4 text-3xl font-thin">שאלה מספר {QIdx() + 1}</h2>
           <div class="flex flex-row gap-x-4">
             <PreviousButton onClick={prevQuestion} />
             <NextButton onClick={nextQuestion} />
@@ -179,14 +179,14 @@ const ExamReview: Component<{
   return (
     <article class="p-4">
       <div class="flex flex-row justify-between">
-        <h1 class="text-6xl font-thin mb-4">מבחן</h1>
+        <h1 class="mb-4 text-6xl font-thin">מבחן</h1>
         <ExamBanner
           class={`
-            dark:text-gray-900 text-gray-100 text-xl
+            text-xl text-gray-100 dark:text-gray-900
             ${
               hasPassed
-                ? 'dark:bg-green-300 bg-green-700'
-                : 'dark:bg-red-300 bg-red-700'
+                ? 'bg-green-700 dark:bg-green-300'
+                : 'bg-red-700 dark:bg-red-300'
             }
           `}
         >
@@ -200,8 +200,8 @@ const ExamReview: Component<{
         </ExamBanner>
       </div>
       <div class="space-y-4">
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center">
-          <h2 class="text-3xl font-thin mb-4">שאלה מספר {QIdx() + 1}</h2>
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+          <h2 class="mb-4 text-3xl font-thin">שאלה מספר {QIdx() + 1}</h2>
           <div class="flex flex-row gap-x-4">
             <PreviousButton onClick={prevQuestion} />
             <NextButton onClick={nextQuestion} />
@@ -245,12 +245,12 @@ const ExamBanner: ParentComponent<{
   return (
     <div
       class={`
-          flex flex-row
+          mb-4 flex
+          flex-row
           items-center
           gap-x-1
-          p-3
-          mb-4
           rounded-s-2xl
+          p-3
           ${props.class ?? ''}
           `}
     >
@@ -267,7 +267,7 @@ const examExplorer = (exam: ExamModel) => {
   );
   const [selected, setSelected] = selectedSignal;
 
-  const setQIdx: typeof _setQIdx = (...args) => {
+  const setQIdx = (...args: Parameters<typeof _setQIdx>) => {
     return batch(() => {
       const newQId = _setQIdx(...args);
       setSelected(exam.questions[QIdx()]?.answer);

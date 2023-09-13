@@ -14,7 +14,7 @@ class DBInfoService {
     return docCacheFirst(
       this.infoCollection,
       this.infoId,
-      DBInfoModel.fromFire
+      DBInfoModel.fromFire,
     ).then((info) => {
       this.dbInfo = info;
       return info;

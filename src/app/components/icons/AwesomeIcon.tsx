@@ -11,7 +11,7 @@ export const AwesomeIcon: Component<{
     class={`
   ${props.icon}
   ${props.class ?? ''}
-  ${props.rtl ? 'rtl:transform rtl:-scale-x-100' : ''}
+  ${props.rtl ? 'rtl:-scale-x-100 rtl:transform' : ''}
   `}
     onClick={props.onClick}
   />

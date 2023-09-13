@@ -23,16 +23,16 @@ export const QuestionExplanations: Component<{ question: QuestionModel }> = (
   return (
     <div
       class="
-    dark:bg-neutral-700 bg-neutral-300
-    rounded-xl overflow-hidden
-    animate-fade-in
-    mb-4
+    mb-4 animate-fade-in
+    overflow-hidden rounded-xl
+    bg-neutral-300
+    dark:bg-neutral-700
     "
     >
-      <p class="text-2xl font-semibold text-center">הסברים</p>
-      <div class="pt-4 mb-4">
+      <p class="text-center text-2xl font-semibold">הסברים</p>
+      <div class="mb-4 pt-4">
         <Show when={explains.sorted$.length === 0}>
-          <p class="text-center text-md font-light">אין הסברים כרגע</p>
+          <p class="text-md text-center font-light">אין הסברים כרגע</p>
         </Show>
         <For each={explains.sorted$}>
           {(explanation, index) => (
@@ -44,7 +44,7 @@ export const QuestionExplanations: Component<{ question: QuestionModel }> = (
           )}
         </For>
       </div>
-      <div class="dark:bg-neutral-600 bg-neutral-400 flex flex-col pb-4 gap-2 mt-4 pt-1">
+      <div class="mt-4 flex flex-col gap-2 bg-neutral-400 pb-4 pt-1 dark:bg-neutral-600">
         <Switch>
           <Match when={userAccessor()}>
             <AddExplanationComponent
@@ -53,7 +53,7 @@ export const QuestionExplanations: Component<{ question: QuestionModel }> = (
             />
           </Match>
           <Match when={!userAccessor()}>
-            <p class="px-4 text-mdt">כדי להוסיף הסברים יש להתחבר</p>
+            <p class="text-mdt px-4">כדי להוסיף הסברים יש להתחבר</p>
           </Match>
         </Switch>
       </div>
@@ -67,8 +67,8 @@ const QuestionExplanation: Component<{
   voteClick: (up: boolean) => void;
 }> = (props) => {
   return (
-    <div class="flex flex-row min-h-24 my-1">
-      <div class="flex flex-col mx-4 text-2xl items-center pt-2">
+    <div class="min-h-24 my-1 flex flex-row">
+      <div class="mx-4 flex flex-col items-center pt-2 text-2xl">
         <IconButton
           onClick={() => props.voteClick(true)}
           pressed={props.isPressed[0]}
@@ -76,7 +76,7 @@ const QuestionExplanation: Component<{
         >
           <AwesomeIcon icon="fas fa-chevron-up" />
         </IconButton>
-        <span dir="ltr" class="text-xl leading-3 my-2 font-medium">
+        <span dir="ltr" class="my-2 text-xl font-medium leading-3">
           {dynamicNumber(props.explanation.votes)}
         </span>
         <IconButton
@@ -86,11 +86,11 @@ const QuestionExplanation: Component<{
         >
           <AwesomeIcon icon="fas fa-chevron-down" />
         </IconButton>
-        <p class="text-xs mx-4 mt-1">
+        <p class="mx-4 mt-1 text-xs">
           {relativeDateMs(props.explanation.date)}
         </p>
       </div>
-      <span class="break-words whitespace-break-spaces p-1">
+      <span class="whitespace-break-spaces break-words p-1">
         {props.explanation.text}
       </span>
     </div>
@@ -112,12 +112,12 @@ const AddExplanationComponent: Component<{
 
   return (
     <>
-      <p class="text-lg font-semibold px-4 flex mt-4">הוספת הסבר</p>
+      <p class="mt-4 flex px-4 text-lg font-semibold">הוספת הסבר</p>
       <textarea
-        class="dark:bg-neutral-600 bg-neutral-400
-        border-2 dark:border-neutral-700 border-neutral-300
-        h-24 p-4 flex items-center justify-between
-        hover:opacity-75 transition-opacity duration-200 resize-none"
+        class="flex h-24
+        resize-none items-center justify-between
+        border-2 border-neutral-300 bg-neutral-400 p-4 transition-opacity
+        duration-200 hover:opacity-75 dark:border-neutral-700 dark:bg-neutral-600"
         ref={textArea}
       />
       <PrimaryButton onClick={addExplanation} class="mx-auto">

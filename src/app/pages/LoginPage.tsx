@@ -97,8 +97,8 @@ const LoginPage: Component = () => {
   };
   return (
     <div>
-      <h1 class="text-6xl font-thin mb-8 p-4">התחברות</h1>
-      <div class="flex flex-col px-2 max-w-md mx-auto gap-2">
+      <h1 class="mb-8 p-4 text-6xl font-thin">התחברות</h1>
+      <div class="mx-auto flex max-w-md flex-col gap-2 px-2">
         <div class="flex flex-col">
           <Switch>
             <Match when={state() === 'phone'}>
@@ -131,8 +131,8 @@ const LoginPage: Component = () => {
           <Show when={error()}>
             <p
               class="
-          dark:text-red-500 text-red-700
-          animate-fade-in transition-opacity duration-200
+          animate-fade-in text-red-700
+          transition-opacity duration-200 dark:text-red-500
           "
             >
               {error()}

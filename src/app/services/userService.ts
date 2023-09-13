@@ -4,11 +4,11 @@ import { PersistentSet } from './tools/persistance';
 class UserService {
   readonly questionsDone = new PersistentSet<number>(
     'questionsDone',
-    new Set()
+    new Set(),
   );
   readonly questionsFailed = new PersistentSet<number>(
     'questionsFailed',
-    new Set()
+    new Set(),
   );
 
   async getQuestionsProgress(): Promise<{

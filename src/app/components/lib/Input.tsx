@@ -15,9 +15,9 @@ export const Input: Component<InputProps> = (props) => {
   return (
     <input
       class="
- dark:bg-gray-700 bg-gray-300
-   h-12 rounded-xl my-2 p-4 flex items-center justify-between
-   hover:opacity-75 transition-opacity duration-200"
+ my-2 flex
+   h-12 items-center justify-between rounded-xl bg-gray-300 p-4 transition-opacity
+   duration-200 hover:opacity-75 dark:bg-gray-700"
       placeholder={props.placeholder}
       type={props.type}
       ref={props.ref}

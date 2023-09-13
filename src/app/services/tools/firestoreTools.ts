@@ -18,13 +18,13 @@ export class DocNotExistError extends Error {
 }
 
 export const defaultFromFire: FromFire<any> = <T>(
-  snapshot: QueryDocumentSnapshot<DocumentData>
+  snapshot: QueryDocumentSnapshot<DocumentData>,
 ) => snapshot.data() as T;
 
 export async function docCacheFirst<T>(
   collection: CollectionReference,
   id: string,
-  fromFire: FromFire<T> = defaultFromFire
+  fromFire: FromFire<T> = defaultFromFire,
 ): Promise<T> {
   const docRef = doc(collection, id);
   try {
@@ -37,7 +37,7 @@ export async function docCacheFirst<T>(
 }
 export async function docsCacheFirst<T>(
   query: Query,
-  fromFire: FromFire<T> = defaultFromFire
+  fromFire: FromFire<T> = defaultFromFire,
 ): Promise<T[]> {
   const fromCache = await getDocsFromCache(query);
   if (!fromCache.empty) return fromCache.docs.map((doc) => fromFire(doc));

@@ -5,7 +5,7 @@ export class FireCheck<TObj = any> {
   constructor(protected data: DocumentData) {}
   static obj<TObj = any>(
     data: DocumentData,
-    check: (check: FireCheck<TObj>) => TObj
+    check: (check: FireCheck<TObj>) => TObj,
   ) {
     if (typeof data !== 'object') throw new Error(`Invalid object data`);
     try {
@@ -43,7 +43,7 @@ export class FireCheck<TObj = any> {
   }
   obj<TObjC = any>(
     key: keyof TObj,
-    check: (check: FireCheck<TObjC>) => void
+    check: (check: FireCheck<TObjC>) => void,
   ): TObjC {
     const _key = key as string;
     if (typeof this.data[_key] !== 'object')
@@ -86,7 +86,7 @@ export class FireCheck<TObj = any> {
   }
   objArr<TObjC = any>(
     key: keyof TObj,
-    check: (check: FireCheck<TObjC>) => void
+    check: (check: FireCheck<TObjC>) => void,
   ): TObjC[] {
     const _key = key as string;
     if (

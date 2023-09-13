@@ -32,20 +32,20 @@ export const QuestionAnswer: Component<{
 }> = (props) => {
   return (
     <button
-      class={`w-full min-h-12 p-4 flex flex-row items-center justify-between
+      class={`min-h-12 flex w-full flex-row items-center justify-between p-4
         ${
           props.feedback === 'correct' || props.feedback === 'missed'
-            ? `dark:bg-green-700 bg-green-300`
+            ? `bg-green-300 dark:bg-green-700`
             : props.feedback === 'wrong'
-            ? `dark:bg-red-700 bg-red-300`
-            : `dark:bg-gray-800 bg-gray-300`
+            ? `bg-red-300 dark:bg-red-700`
+            : `bg-gray-300 dark:bg-gray-800`
         }
-        dark:text-white text-black
         cursor-pointer rounded-xl
-        text-start
-        hover:bg-opacity-75 hover:border-opacity-50
+        text-start text-black
+        ring-black
         transition-all duration-200
-        dark:ring-white ring-black ${props.selected ? 'ring-2 ' : ''}`}
+        hover:border-opacity-50 hover:bg-opacity-75
+        dark:text-white dark:ring-white ${props.selected ? 'ring-2 ' : ''}`}
       onClick={props.onClick}
     >
       {props.answer}

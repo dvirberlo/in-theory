@@ -48,16 +48,16 @@ export const QuestionView: Component<QuestionViewProps> = (props) => {
 
   return (
     <article class="px-2">
-      <h2 class="text-2xl mb-5 px-2">{props.question.title}</h2>
+      <h2 class="mb-5 px-2 text-2xl">{props.question.title}</h2>
 
       <div class="md:flex md:flex-row">
         <Show when={props.question.images.length > 0}>
           <QuestionImages
             images={props.question.images}
-            class="px-2 md:order-last md:w-5/12 mb-5"
+            class="mb-5 px-2 md:order-last md:w-5/12"
           />
         </Show>
-        <section class="px-2 flex-grow md:w-7/12 flex flex-col gap-y-6">
+        <section class="flex flex-grow flex-col gap-y-6 px-2 md:w-7/12">
           <div class="flex flex-col gap-y-2">
             <For each={answers}>
               {(answer, index) => (
@@ -78,7 +78,7 @@ export const QuestionView: Component<QuestionViewProps> = (props) => {
                 />
               )}
             </For>
-            <div class="flex justify-stretch gap-2 mt-1">
+            <div class="mt-1 flex justify-stretch gap-2">
               <Show when={props.onCheck}>
                 <PrimaryButton
                   onClick={check}
