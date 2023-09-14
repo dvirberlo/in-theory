@@ -2,6 +2,7 @@ import {
   Component,
   Match,
   ParentComponent,
+  Show,
   Switch,
   batch,
   createEffect,
@@ -19,6 +20,7 @@ import {
   MINIMUM_PASSING_QUESTION_COUNT,
 } from '../constants/examConstants';
 import { ExamModel } from '../models/examModel';
+import { getQuestionCheck } from '../models/questionModel';
 
 type ExamState = 'init' | 'fill' | 'review';
 
@@ -32,7 +34,19 @@ const ExamPage: Component = () => {
     exam = examService.newExam();
     setState('fill');
   };
-  const submitExam = () => setState('review');
+  const submitExam = () => {
+    import('../services/questionService').then(({ questionService }) => {
+      if (!exam) return;
+      for (const q of exam.questions) {
+        if (q && q.answer !== undefined)
+          questionService.setQuestionCheck(
+            q.id,
+            getQuestionCheck(q.answer, q.shuffleAnswers().correctAnswerIndex),
+          );
+      }
+    });
+    setState('review');
+  };
 
   return (
     <Switch>
@@ -197,6 +211,9 @@ const ExamReview: Component<{
             <span class="font-bold">{EXAM_QUESTIONS}</span>
           </div>
           <span>{hasPassed ? '(עובר)' : '(לא עובר)'}</span>
+          <Show when={hasPassed}>
+            <AwesomeIcon icon="fas fa-trophy" class="mx-2" />
+          </Show>
         </ExamBanner>
       </div>
       <div class="space-y-4">
