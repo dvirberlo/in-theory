@@ -23,7 +23,7 @@ const HomePage: Component = () => {
       </div>
       <div class="flex flex-row items-center gap-x-4">
         <PrimaryButton onClick={() => navigate(routesPath.learn)}>
-          התחל ללמוד
+          התחילו ללמוד
           <AwesomeIcon icon="fas fa-arrow-right" rtl />
         </PrimaryButton>
         <Show when={!userAccessor()}>

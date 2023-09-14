@@ -153,13 +153,13 @@ export const SideNav: Component<{
               }}
             >
               <AwesomeIcon icon="fas fa-sign-out-alt" />
-              <span>התנתק</span>
+              <span>התנתקות</span>
             </RedMenuButton>
           </Match>
           <Match when={!userAccessor()}>
             <PrimaryMenuButton onClick={() => navigate(routesPath.login)}>
               <AwesomeIcon icon="fas fa-sign-in-alt" rtl />
-              <span>התחבר</span>
+              <span>התחברות</span>
             </PrimaryMenuButton>
           </Match>
         </Switch>

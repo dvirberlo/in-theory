@@ -87,7 +87,7 @@ const ExamInit: Component<{
         </p>
       </div>
       <PrimaryButton onClick={props.newExam}>
-        התחל מבחן
+        התחילו מבחן
         <AwesomeIcon icon="fas fa-play" rtl />
       </PrimaryButton>
     </article>

@@ -8,12 +8,12 @@ export type ButtonProps = {
   ['aria-label']?: string;
 };
 
-export const Button: ParentComponent<ButtonProps> = (props) => (
+const ButtonBase: ParentComponent<ButtonProps> = (props) => (
   <button
     onClick={props.onClick}
     disabled={props.disabled}
     class={classes(
-      'flex items-center gap-x-1.5 rounded-xl bg-neutral-700 px-4 py-3 font-semibold text-white transition-opacity duration-200 hover:opacity-80 disabled:opacity-40 dark:bg-neutral-400 dark:text-black',
+      'flex items-center gap-x-1.5 rounded-xl px-4 py-3 font-semibold transition-all duration-200 hover:bg-opacity-80 disabled:opacity-40',
       props.class ?? '',
     )}
     area-label={props['aria-label']}
@@ -23,31 +23,29 @@ export const Button: ParentComponent<ButtonProps> = (props) => (
 );
 
 export const PrimaryButton: ParentComponent<ButtonProps> = (props) => (
-  <button
+  <ButtonBase
     onClick={props.onClick}
     disabled={props.disabled}
     class={classes(
-      'flex items-center gap-x-1.5 rounded-xl bg-sky-600 px-4 py-3 font-semibold text-white transition-all duration-200 hover:bg-opacity-90 disabled:opacity-40 dark:bg-sky-400 dark:text-black',
+      'bg-blue-400 text-black dark:bg-blue-600 dark:text-white',
       props.class ?? '',
     )}
-    area-label={props['aria-label']}
-  >
-    {props.children}
-  </button>
+    aria-label={props['aria-label']}
+    children={props.children}
+  />
 );
 
 export const SecondaryButton: ParentComponent<ButtonProps> = (props) => (
-  <button
+  <ButtonBase
     onClick={props.onClick}
     disabled={props.disabled}
     class={classes(
-      'flex items-center gap-x-1.5 rounded-xl bg-teal-300 px-4 py-3 font-semibold text-black transition-all duration-200 hover:bg-opacity-90 disabled:opacity-40 dark:bg-teal-700 dark:text-white',
+      'bg-indigo-200 text-black dark:bg-indigo-800 dark:text-white',
       props.class ?? '',
     )}
-    area-label={props['aria-label']}
-  >
-    {props.children}
-  </button>
+    aria-label={props['aria-label']}
+    children={props.children}
+  />
 );
 
 export const IconButton: ParentComponent<
@@ -88,58 +86,56 @@ export const IconSquare: ParentComponent<ButtonProps> = (props) => (
   </button>
 );
 
-export const MenuButton: ParentComponent<ButtonProps> = (props) => (
+const MenuButtonBase: ParentComponent<ButtonProps> = (props) => (
   <button
     onClick={props.onClick}
     disabled={props.disabled}
     class={classes(
-      'flex items-center gap-x-1.5 rounded-xl px-4 py-3 font-semibold text-black transition-all duration-200 hover:bg-neutral-300 disabled:opacity-40 dark:text-white hover:dark:bg-neutral-700',
+      'transition-color flex items-center gap-x-1.5 rounded-xl px-4 py-3 font-semibold duration-200 disabled:opacity-40',
       props.class ?? '',
     )}
     area-label={props['aria-label']}
   >
     {props.children}
   </button>
+);
+
+export const MenuButton: ParentComponent<ButtonProps> = (props) => (
+  <MenuButtonBase
+    onClick={props.onClick}
+    disabled={props.disabled}
+    class={classes(
+      'text-black hover:bg-neutral-300 dark:text-white hover:dark:bg-neutral-700',
+      props.class ?? '',
+    )}
+    aria-label={props['aria-label']}
+    children={props.children}
+  />
 );
 
 export const RedMenuButton: ParentComponent<ButtonProps> = (props) => (
-  <button
+  <MenuButtonBase
     onClick={props.onClick}
     disabled={props.disabled}
     class={classes(
-      'flex items-center gap-x-1.5 rounded-xl px-4 py-3 font-semibold text-red-700 transition-all duration-200 hover:bg-red-300 hover:text-black disabled:opacity-40 dark:text-red-300 hover:dark:bg-red-700 hover:dark:text-white',
+      'text-red-700 hover:bg-red-500 hover:bg-opacity-30 hover:text-black dark:text-red-300 hover:dark:text-white',
       props.class ?? '',
     )}
-    area-label={props['aria-label']}
-  >
-    {props.children}
-  </button>
+    aria-label={props['aria-label']}
+    children={props.children}
+  />
 );
 
 export const PrimaryMenuButton: ParentComponent<ButtonProps> = (props) => (
-  <button
+  <MenuButtonBase
     onClick={props.onClick}
     disabled={props.disabled}
     class={classes(
-      'flex items-center gap-x-1.5 rounded-xl px-4 py-3 font-semibold text-sky-700 transition-all duration-200 hover:bg-sky-300 hover:text-black disabled:opacity-40 dark:text-sky-300 hover:dark:bg-sky-700 hover:dark:text-white',
+      // 'text-indigo-600 hover:bg-indigo-400 hover:text-black dark:text-indigo-400 hover:dark:bg-sky-600 hover:dark:text-white',
+      'text-blue-600 hover:bg-blue-500 hover:bg-opacity-30 hover:text-black dark:text-blue-400 hover:dark:text-white',
       props.class ?? '',
     )}
     area-label={props['aria-label']}
-  >
-    {props.children}
-  </button>
-);
-
-export const SecondaryMenuButton: ParentComponent<ButtonProps> = (props) => (
-  <button
-    onClick={props.onClick}
-    disabled={props.disabled}
-    class={classes(
-      'flex items-center gap-x-1.5 rounded-xl px-4 py-3 font-semibold text-teal-800 transition-all duration-200 hover:bg-teal-200 hover:text-black disabled:opacity-40 dark:text-teal-200 hover:dark:bg-teal-800 hover:dark:text-white',
-      props.class ?? '',
-    )}
-    area-label={props['aria-label']}
-  >
-    {props.children}
-  </button>
+    children={props.children}
+  />
 );

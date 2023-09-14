@@ -15,9 +15,9 @@ export default defineConfig({
       includeAssets: ['*.png', '*.svg', '*.jpg', '*.json'],
       manifest: {
         name: 'My Awesome App',
-        short_name: 'MyApp',
-        description: 'My Awesome App description',
-        theme_color: '#ffffff',
+        short_name: 'In Theory',
+        description: 'Modern leaning of driving theory',
+        theme_color: '#6b7280',
         icons: [
           {
             src: '/images/logo/logo-192.png',

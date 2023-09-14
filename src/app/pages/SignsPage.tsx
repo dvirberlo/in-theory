@@ -10,9 +10,8 @@ const SignsPage: Component = () => {
         לצערי לא מצאתי לוח תמרורים רשמי של משרד התחבורה שנגיש ליישום באתר.
         <br />
         <a
-          class="text-blue-500 hover:text-opacity-90"
+          class="text-blue-500 hover:text-opacity-80"
           href="https://www.gov.il/BlobFolder/policy/tamrurim_7924_01_18/he/traffic-sign.pdf"
-          target="_blank"
         >
           קישור לקובץ PDF של משרד התחבורה
         </a>

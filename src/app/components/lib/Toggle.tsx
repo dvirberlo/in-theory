@@ -10,7 +10,7 @@ export const Toggle: Component<{
   return (
     <button
       class={
-        'relative mx-1 my-2 inline-flex h-9 w-16 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-indigo-600 transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 ' +
+        'relative mx-1 my-2 inline-flex h-9 w-16 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-blue-600 transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 ' +
         (checked() ? 'bg-opacity-100' : 'bg-opacity-25')
       }
       role="switch"
