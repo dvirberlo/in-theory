@@ -1,9 +1,10 @@
 import { useNavigate } from '@solidjs/router';
-import { Component, Show } from 'solid-js';
+import { Component, Match, Show, Switch, createResource } from 'solid-js';
 import { routesPath } from '../app.routes';
-import { UserProgress } from '../components/home/UserProgress';
 import { AwesomeIcon } from '../components/icons/AwesomeIcon';
 import { PrimaryButton, SecondaryButton } from '../components/lib/Button';
+import { CenteredLoading } from '../components/lib/Loading';
+import { Progress } from '../components/lib/Progress';
 import { userAccessor } from '../services/authService';
 
 const HomePage: Component = () => {
@@ -34,6 +35,30 @@ const HomePage: Component = () => {
       </div>
       <UserProgress />
     </div>
+  );
+};
+
+const UserProgress: Component = () => {
+  const [progress] = createResource(
+    async () =>
+      await (
+        await import('../services/userService')
+      ).userService.getQuestionsProgress(),
+  );
+
+  return (
+    <Switch>
+      <Match when={progress.loading}>
+        <CenteredLoading />
+      </Match>
+      <Match when={progress()}>
+        <Progress
+          correct={progress()!.correct}
+          wrong={progress()!.wrong}
+          total={progress()!.total}
+        />
+      </Match>
+    </Switch>
   );
 };
 

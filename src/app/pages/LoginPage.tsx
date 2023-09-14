@@ -31,7 +31,7 @@ const LoginPage: Component = () => {
   const [error, setError] = createSignal<string | undefined>(undefined);
   const [loading, setLoading] = createSignal(false);
 
-  createEffect(async () => {
+  createEffect(() => {
     if (userAccessor()) navigate(routesPath.home);
   });
 
