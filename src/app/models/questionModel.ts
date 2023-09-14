@@ -112,7 +112,15 @@ export class QuestionModel implements Question {
   }
 }
 
-// export type VotesArrayKeys = KeysWithArrayValues<Explanation, string>;
+// export type VotesArrayKeys = KeysMatching<Explanation, string[]>;
 export type VotesArrayKeys = 'upVotes' | 'downVotes';
 
 export type QuestionCheck = 'correct' | 'wrong';
+
+export const getQuestionCheck = (
+  answer: number,
+  correctAnswerIndex: number,
+): QuestionCheck => {
+  if (answer === correctAnswerIndex) return 'correct';
+  return 'wrong';
+};

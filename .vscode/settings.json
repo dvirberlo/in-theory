@@ -1,4 +1,9 @@
 {
   "cSpell.words": ["firestore", "Recaptcha", "solidjs"],
-  "tailwindCSS.experimental.classRegex": ["tw`([^`]*)`"]
+  "tailwindCSS.experimental.classRegex": [
+    ":\\s*TW\\s*=\\s*\"([^\"]*)\"",
+    "\"([^\"]*)\"\\s*as\\s*TW"
+  ],
+  // line break for long lines:
+  "editor.wordWrap": "on"
 }

@@ -1,5 +1,9 @@
 import { Component, For, JSX, Show, Signal, createSignal } from 'solid-js';
-import { QuestionCheck, QuestionModel } from '../../models/questionModel';
+import {
+  QuestionCheck,
+  QuestionModel,
+  getQuestionCheck,
+} from '../../models/questionModel';
 import { Chip } from '../Chip';
 import { AwesomeIcon } from '../icons/AwesomeIcon';
 import { PrimaryButton } from '../lib/Button';
@@ -28,7 +32,7 @@ export const QuestionView: Component<QuestionViewProps> = (props) => {
   const getStatus = (): QuestionCheck | undefined => {
     const selected = selectedAnswer();
     if (selected === undefined) return undefined;
-    return selected === correctAnswerIndex ? 'correct' : 'wrong';
+    return getQuestionCheck(selected, correctAnswerIndex);
   };
   const [status, setStatus] = createSignal<QuestionCheck | undefined>(
     getStatus(),
