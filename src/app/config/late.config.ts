@@ -1,11 +1,13 @@
 export function lateConfig() {
-  late(async () => {
-    Promise.all([
-      import('./analytics.config'),
-      import('./auth.config'),
-      import('./firestore.config'),
-    ]);
-  });
+  late(() =>
+    setTimeout(() =>
+      Promise.all([
+        import('./analytics.config'),
+        import('./auth.config'),
+        import('./firestore.config'),
+      ]),
+    ),
+  );
 }
 
 function late(func: () => unknown) {

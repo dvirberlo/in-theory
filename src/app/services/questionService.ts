@@ -1,6 +1,6 @@
 import { collection, limit, query, where } from 'firebase/firestore';
 import { db } from '../config/firestore.config';
-import { QuestionModel, QuestionCheck } from '../models/questionModel';
+import { QuestionCheck, QuestionModel } from '../models/questionModel';
 import { appSettingsService } from './appSettingsService';
 import { dbInfoService } from './dbInfoService';
 import { DocNotExistError, docsCacheFirst } from './tools/firestoreTools';
@@ -33,25 +33,32 @@ class QuestionService {
     let id = await this.randomQuestionId();
     if (!appSettingsService.settings.value.skipPastQuestions) return id;
 
-    const skip = userService.questionsDone.value;
-    if (info.totalQuestions <= skip.size) {
+    const skipSet = userService.correctQuestions;
+    if (info.totalQuestions <= skipSet.size) {
       throw new NoMoreQuestionsError();
     }
-    while (skip?.has(id)) {
+    while (skipSet.has(id)) {
       id = (id + 1) % info.totalQuestions;
     }
     return id;
   }
 
   setQuestionCheck(id: number, check: QuestionCheck): void {
-    switch (check) {
-      case 'correct':
-        userService.questionsDone.set((prev) => prev.add(id));
-        break;
-      case 'wrong':
-        userService.questionsFailed.set((prev) => prev.add(id));
-        break;
-    }
+    const isCorrect = check === 'correct';
+    const newSet = isCorrect
+        ? userService.correctQuestions
+        : userService.wrongQuestions,
+      otherSet = isCorrect
+        ? userService.wrongQuestions
+        : userService.correctQuestions;
+
+    const removed = otherSet.delete(id);
+    if (
+      !isCorrect ||
+      !removed ||
+      !appSettingsService.settings.value.waitForCorrectTwice
+    )
+      newSet.add(id);
   }
 }
 

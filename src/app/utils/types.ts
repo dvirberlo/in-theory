@@ -1,3 +1,3 @@
-export type KeysWithArrayValues<TObj, TArr = any> = {
-  [K in keyof TObj]: TObj[K] extends TArr[] ? K : never;
-}[keyof TObj];
+export type KeysMatching<T, V> = {
+  [K in keyof T]: T[K] extends V ? K : never;
+}[keyof T];

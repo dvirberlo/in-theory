@@ -2,24 +2,24 @@ import { dbInfoService } from './dbInfoService';
 import { PersistentSet } from './tools/persistance';
 
 class UserService {
-  readonly questionsDone = new PersistentSet<number>(
+  readonly correctQuestions = new PersistentSet<number>(
     'questionsDone',
     new Set(),
   );
-  readonly questionsFailed = new PersistentSet<number>(
+  readonly wrongQuestions = new PersistentSet<number>(
     'questionsFailed',
     new Set(),
   );
 
   async getQuestionsProgress(): Promise<{
-    done: number;
-    failed: number;
+    correct: number;
+    wrong: number;
     total: number;
   }> {
     const info = await dbInfoService.getDBInfo();
     return {
-      done: this.questionsDone.value.size,
-      failed: this.questionsFailed.value.size,
+      correct: this.correctQuestions.value.size,
+      wrong: this.wrongQuestions.value.size,
       total: info.totalQuestions,
     };
   }
