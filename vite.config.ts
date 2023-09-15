@@ -14,7 +14,7 @@ export default defineConfig({
     VitePWA({
       includeAssets: ['*.png', '*.svg', '*.jpg', '*.json'],
       manifest: {
-        name: 'My Awesome App',
+        name: 'In Theory',
         short_name: 'In Theory',
         description: 'Modern leaning of driving theory',
         theme_color: '#6b7280',
