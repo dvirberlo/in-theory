@@ -1,9 +1,16 @@
 import { DocumentData, FirestoreDataConverter } from 'firebase/firestore';
+import { KeysMatching } from '../utils/types';
+
+type StrKeysMatching<TObj extends Object, TType> = KeysMatching<
+  TObj,
+  TType | undefined
+> &
+  string;
 
 // Note: Consider using zod for validation instead of this class
-export class FireCheck<TObj = any> {
+export class FireCheck<TObj extends Object> {
   constructor(protected data: DocumentData) {}
-  static obj<TObj = any>(
+  static obj<TObj extends Object>(
     data: DocumentData,
     check: (check: FireCheck<TObj>) => TObj,
   ) {
@@ -17,75 +24,70 @@ export class FireCheck<TObj = any> {
     return data as TObj;
   }
 
-  str(key: keyof TObj): string {
-    const _key = key as string;
-    if (typeof this.data[_key] !== 'string')
-      throw new Error(`Invalid string at key ${_key}`);
-    return this.data[_key];
+  str(key: StrKeysMatching<TObj, string>): string {
+    if (typeof this.data[key] !== 'string')
+      throw new Error(`Invalid string at key ${key}`);
+    return this.data[key];
   }
-  num(key: keyof TObj): number {
-    const _key = key as string;
-    if (typeof this.data[_key] !== 'number')
-      throw new Error(`Invalid number at key ${_key}`);
-    return this.data[_key];
+  num(key: StrKeysMatching<TObj, number>): number {
+    if (typeof this.data[key] !== 'number')
+      throw new Error(`Invalid number at key ${key}`);
+    return this.data[key];
   }
-  // arr(key: keyof TObj): any[] {
-  //   const _key = key as string;
-  //   if (!Array.isArray(this.data[_key]))
-  //     throw new Error(`Invalid array at key ${_key}`);
-  //   return this.data[_key];
-  // }
-  bool(key: keyof TObj): boolean {
-    const _key = key as string;
-    if (typeof this.data[_key] !== 'boolean')
-      throw new Error(`Invalid boolean at key ${_key}`);
-    return this.data[_key];
+  bool(key: StrKeysMatching<TObj, boolean>): boolean {
+    if (typeof this.data[key] !== 'boolean')
+      throw new Error(`Invalid boolean at key ${key}`);
+    return this.data[key];
   }
-  obj<TObjC = any>(
-    key: keyof TObj,
+  enum<TEnum>(
+    key: StrKeysMatching<TObj, TEnum>,
+    enumArr: readonly TEnum[],
+  ): TEnum {
+    if (!enumArr.includes(this.data[key] as TEnum))
+      throw new Error(`Invalid enum at key ${key}`);
+    return this.data[key] as TEnum;
+  }
+  obj<TObjC extends Object>(
+    key: StrKeysMatching<TObj, Object>,
     check: (check: FireCheck<TObjC>) => void,
   ): TObjC {
-    const _key = key as string;
-    if (typeof this.data[_key] !== 'object')
-      throw new Error(`Invalid object at key ${_key}`);
+    if (typeof this.data[key] !== 'object')
+      throw new Error(`Invalid object at key ${key}`);
     try {
-      check(new FireCheck(this.data[_key]));
+      check(new FireCheck(this.data[key]));
     } catch (e) {
-      console.error(`Error checking object:`, this.data[_key], e);
+      console.error(`Error checking object:`, this.data[key], e);
       throw e;
     }
-    return this.data[_key];
+    return this.data[key];
   }
 
-  strArr(key: keyof TObj): string[] {
-    const _key = key as string;
+  strArr(key: StrKeysMatching<TObj, string[]>): string[] {
     if (
-      !Array.isArray(this.data[_key]) ||
-      !(this.data[_key] as Array<any>).every((el) => typeof el === 'string')
+      !Array.isArray(this.data[key]) ||
+      !(this.data[key] as Array<any>).every((el) => typeof el === 'string')
     )
-      throw new Error(`Invalid string array at key ${_key}`);
-    return this.data[_key];
+      throw new Error(`Invalid string array at key ${key}`);
+    return this.data[key];
   }
-  numArr(key: keyof TObj): number[] {
-    const _key = key as string;
+  numArr(key: StrKeysMatching<TObj, number[]>): number[] {
     if (
-      !Array.isArray(this.data[_key]) ||
-      !(this.data[_key] as Array<any>).every((el) => typeof el === 'number')
+      !Array.isArray(this.data[key]) ||
+      !(this.data[key] as Array<any>).every((el) => typeof el === 'number')
     )
-      throw new Error(`Invalid number array at key ${_key}`);
-    return this.data[_key];
+      throw new Error(`Invalid number array at key ${key}`);
+    return this.data[key];
   }
-  boolArr(key: keyof TObj): boolean[] {
-    const _key = key as string;
+  boolArr(key: StrKeysMatching<TObj, boolean[]>): boolean[] {
     if (
-      !Array.isArray(this.data[_key]) ||
-      !(this.data[_key] as Array<any>).every((el) => typeof el === 'boolean')
+      !Array.isArray(this.data[key]) ||
+      !(this.data[key] as Array<any>).every((el) => typeof el === 'boolean')
     )
-      throw new Error(`Invalid boolean array at key ${_key}`);
-    return this.data[_key];
+      throw new Error(`Invalid boolean array at key ${key}`);
+    return this.data[key];
   }
-  objArr<TObjC = any>(
-    key: keyof TObj,
+  objArr<TObjC extends Object>(
+    key: StrKeysMatching<TObj, TObjC[]>,
     check: (check: FireCheck<TObjC>) => void,
   ): TObjC[] {
     const _key = key as string;

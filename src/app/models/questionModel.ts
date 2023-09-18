@@ -8,6 +8,17 @@ import {
 } from 'firebase/firestore';
 import { FireCheck, FromFire, ToFire } from './firestoreTypesTools';
 
+export const CategoriesArr = [
+  'בטיחות',
+  'חוקי התנועה',
+  'הכרת הרכב',
+  'תמרורים',
+] as const;
+export type Category = (typeof CategoriesArr)[number];
+
+// export const LicenseLevelArr = ['C1', 'C', 'D', 'A', '1'] as const;
+// export type LicenseLevel = (typeof LicenseLevelArr)[number];
+
 export type Image = {
   id: string;
   alt?: string;
@@ -20,7 +31,7 @@ export type Question = {
   correctAnswer: string;
   images: Image[];
   carTypes: string[];
-  category: string;
+  category: Category;
   explanations?: Explanation[];
 };
 
@@ -47,9 +58,11 @@ export class QuestionModel implements Question {
     public correctAnswer: string,
     public images: Image[],
     public carTypes: string[],
-    public category: string,
+    public category: Category,
     public explanations?: Explanation[],
-  ) {}
+  ) {
+    console.log(this);
+  }
   fromFirestore(
     snapshot: QueryDocumentSnapshot<DocumentData>,
     options?: SnapshotOptions | undefined,
@@ -75,7 +88,7 @@ export class QuestionModel implements Question {
         alt: check.str('alt'),
       })),
       check.strArr('carTypes'),
-      check.str('category'),
+      check.enum('category', CategoriesArr),
 
       data.explanations === undefined
         ? undefined
