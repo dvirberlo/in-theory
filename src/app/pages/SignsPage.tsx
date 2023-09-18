@@ -1,6 +1,7 @@
 // https://www.google.com/search?q=%D7%9E%D7%A9%D7%A8%D7%93+%D7%94%D7%AA%D7%97%D7%91%D7%95%D7%A8%D7%94+%D7%9C%D7%95%D7%97+%D7%AA%D7%9E%D7%A8%D7%95%D7%A8%D7%99%D7%9D
 
 import { Component } from 'solid-js';
+import { ExternalLink } from '../components/lib/Link';
 
 const SignsPage: Component = () => {
   return (
@@ -9,12 +10,9 @@ const SignsPage: Component = () => {
       <span class="text-md">
         לצערי לא מצאתי לוח תמרורים רשמי של משרד התחבורה שנגיש ליישום באתר.
         <br />
-        <a
-          class="text-blue-500 hover:text-opacity-80"
-          href="https://www.gov.il/BlobFolder/policy/tamrurim_7924_01_18/he/traffic-sign.pdf"
-        >
+        <ExternalLink href="https://www.gov.il/BlobFolder/policy/tamrurim_7924_01_18/he/traffic-sign.pdf">
           קישור לקובץ PDF של משרד התחבורה
-        </a>
+        </ExternalLink>
       </span>
     </div>
   );
